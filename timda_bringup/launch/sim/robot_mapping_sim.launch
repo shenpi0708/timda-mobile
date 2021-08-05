@@ -11,5 +11,6 @@
     <odometryframe>odom</odometryframe>
   </include>
   <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" />
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find timda_configs)/rviz/mapping.rviz" />
   <!-- node name="rviz" pkg="rviz" type="rviz" args="-d $(find timda_description)/rviz/laser.rviz" />-->
 </launch>
