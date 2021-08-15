@@ -52,7 +52,9 @@
     </div>
 
     <div id="joystick" style="border: 2px rgb(3, 167, 158) dashed">
-        <div id="joy3Div" style="width:200px;height:200px;margin:50px;"></div>
+
+        <div id="joy3Div"  style="width:200px;height:200px;margin:50px;"
+        ></div>
         <div id="leftside" style=" width:300px; float:left">
             <div style="left:750px;">
                 Posizione X:<input id="joy3PosizioneX" type="text" /><br />
@@ -101,6 +103,7 @@
             <input id='nav_start' type="checkbox"onclick=navStart() ><br /> 
         </div>
     </div>
+    
     <script src="js/jquery.min.js"></script>
     <script src="js/socket.io.js"></script>
     <script src="js/joy.js"></script>
@@ -109,6 +112,11 @@
     <script src="js/rostopic.js"></script>
     <script src="js/Rosservice.js"></script>
     <script src="js/KeyboardControl.js?ver=20210309"></script>
+    <!-- <script src="js/jquery.ui.touch-punch.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" type="text/javascript"></script>
+
+    <script>$('#get_loc').draggable();</script>
+     -->
 </body>
 
 </html>

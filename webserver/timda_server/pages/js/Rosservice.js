@@ -160,5 +160,7 @@ function update_rqt(){
         get_loc_bool= MyItem
 
     } 
-
+function test(){
+    console.log('hi');
+}
 //======================================================================

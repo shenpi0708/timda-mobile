@@ -93,21 +93,15 @@ var JoyStick = (function(container, parameters)
   var movedX=centerX;
   var movedY=centerY;
   var movedAng = 0;
-    
+ 
   // Check if the device support the touch or not
-  if("ontouchstart" in document.documentElement)
-  {
-    canvas.addEventListener("touchstart", onTouchStart, false);
-    canvas.addEventListener("touchmove", onTouchMove, false);
-    canvas.addEventListener("touchend", onTouchEnd, false);
-  }
-  else
-  {
-    canvas.addEventListener("mousedown", onMouseDown, false);
-    canvas.addEventListener("mousemove", onMouseMove, false);
-    canvas.addEventListener("mouseup", onMouseUp, false);
-    canvas.addEventListener("mouseout", onMouseUp, false);
-  }
+  canvas.addEventListener("touchstart", onTouchStart, false);
+  canvas.addEventListener("touchend", onTouchEnd, false);
+  canvas.addEventListener("mousedown", onMouseDown, false);
+  canvas.addEventListener("mousemove", onMouseMove, false);
+  canvas.addEventListener("mouseup", onMouseUp, false);
+  canvas.addEventListener("mouseout", onMouseUp, false);
+
   // Draw the object
   drawExternal();
   drawInternal();
@@ -176,6 +170,7 @@ var JoyStick = (function(container, parameters)
     context.closePath();
     context.fillStyle = '#FFCEBE';
     context.fill();
+    
   }
   
   /**
