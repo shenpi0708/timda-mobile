@@ -1,8 +1,56 @@
+if (location.hostname == "") {
+	location.hostname = "localhost";
+  }
+  
+  var ros = new ROSLIB.Ros({
+	url: "ws://" + location.hostname + ":9090",
+  });
+  
+  ros.on("connection", function () {
+	console.log("Connected to websocket server.");
+	$("#ros-status").text("\tOK");
+  });
+  
+  ros.on("error", function (error) {
+	console.log("Error connecting to websocket server: ", error);
+	$("#ros-status").text("\tERROR");
+  });
+  
+  ros.on("close", function () {
+	console.log("Connection to websocket server closed.");
+	$("#ros-status").text("\tCLOSE");
+  });
+  var cmdVel = new ROSLIB.Topic({
+	ros: ros,
+	name: "/mobile/cmd_vel",
+	messageType: "geometry_msgs/Twist",
+  });
+  Virtualstart = false;
+  var twist = new ROSLIB.Message({
+	linear: {
+	  x: 0.0,
+	  y: 0.0,
+	  z: 0.0,
+	},
+	angular: {
+	  x: 0.0,
+	  y: 0.0,
+	  z: 0.0,
+	},
+  });
+
+function VirtualState(state) {
+	Virtualstart = state;
+  }
+
+
 /**
  * @preserve jQuery Range2DSlider plugin v1.0.5
  * @homepage http://xdsoft.net/jqplugins/range2dslider/
  * (c) 2014, Chupurnov Valeriy.
  */
+ var is_topic_pub = false;
+
 !function($){	
 	var ARROWLEFT = 37,
 		ARROWUP = 38,
@@ -20,8 +68,8 @@
 			className:'range2dslider',
 			style:'',
 			
-			height:'200px',
-			width:'200px',
+			height:'202px',
+			width:'202px',
 			x:'left',
 			y:'bottom',
 			
@@ -190,8 +238,8 @@
 			var allowAxis = _this.options.allowAxisMove.xd(sliderId,'both');
 			
 			return $.extend(true,_this.values[sliderId],roundValue(_this,[
-				(allowAxis=='x'||allowAxis=='both')?(_this.limitX?(parseInt(x)/_this.limitX)*(_this.options.axis[0][_this.options.axis[0].length-1]-_this.options.axis[0][0])+_this.options.axis[0][0]:0):_this.values[sliderId][0],
-				(allowAxis=='y'||allowAxis=='both')?(_this.limitY?(parseInt(y)/_this.limitY)*(_this.options.axis[1][_this.options.axis[1].length-1]-_this.options.axis[1][0])+_this.options.axis[1][0]:0):_this.values[sliderId][1]
+				(allowAxis=='x'||allowAxis=='both')?(_this.limitX?(parseFloat(x)/_this.limitX)*(_this.options.axis[0][_this.options.axis[0].length-1]-_this.options.axis[0][0])+_this.options.axis[0][0]:0):_this.values[sliderId][0],
+				(allowAxis=='y'||allowAxis=='both')?(_this.limitY?(parseFloat(y)/_this.limitY)*(_this.options.axis[1][_this.options.axis[1].length-1]-_this.options.axis[1][0])+_this.options.axis[1][0]:0):_this.values[sliderId][1]
 			]));
 		},
 		
@@ -372,7 +420,16 @@
 			})
 			.on('xchange.xdsoft', function( e,i ){
 				var value = _this.options.printValue.call(_this,_this.values);			
-				if( value!=$input.attr('value') ){	
+				if( value!=$input.attr('value') ){
+					if(Virtualstart){
+						var speed = document.getElementById("powerRange").value;	
+						twist.linear.x = parseInt(value.split('|')[0])*speed/100;
+						twist.linear.y = parseInt(value.split('|')[1])*speed/100;
+						twist.angular.z = 0.0;
+						cmdVel.publish(twist);						
+					}
+
+
 					$input
 						.attr('value',value)
 						.val(value)
@@ -464,7 +521,7 @@
 					length=Math.sqrt((getY-limitY/2)*(getY-limitY/2) + (getX-limitX/2)*(getX-limitX/2));
 					if( options.allowAxisMove=='both' || options.allowAxisMove=='x'){
 
-						if( length > limitX/2 ) {
+						if( length > limitX/2 ) {Math.round(3.14) 
 							if (getX>limitX/2)
 								newX = limitX/2*Math.cos(angle)+limitX/2;
 							else
@@ -490,7 +547,7 @@
 
 					}
 					// cricle
-
+					console.log( newX,newY)
 
 					draggableElement.style[options.x] = newX + 'px';
 					draggableElement.style[options.y] = newY+'px';
@@ -498,6 +555,7 @@
 					if( options.onMove&&$.isFunction(options.onMove) ){
 						options.onMove.call(draggableElement,newX,newY);
 					}
+					is_topic_pub=true;
 				}
 			},
 			
@@ -508,7 +566,7 @@
 					draggableElement.style[options.x] = limitX/2 + 'px';
 					draggableElement.style[options.y] = limitY/2+'px';
 					options.onMove.call(draggableElement,limitX/2,limitY/2);
-
+					is_topic_pub=false;
 					$('html').removeClass('xdsoft_noselect');
 				}
 			},
@@ -877,6 +935,7 @@
 			showLegend:[1,0],
 			allowAxisMove:['x'],
 			printLabel:function( val ){
+				
 				return val[0];
 			}
 		},
@@ -891,6 +950,7 @@
 			showLegend:[0,0],
 			allowAxisMove:['y'],
 			printLabel:function( val ){
+
 				return val[1];
 			}
 		}

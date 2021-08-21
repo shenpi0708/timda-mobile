@@ -1,3 +1,7 @@
+ html {
+    overflow: -moz-hidden-unscrollable;
+    height: 100%;
+}
 .xdsoft_range2dslider,.xdsoft_range2dslider *{
 	-moz-box-sizing: border-box; 
 	-webkit-box-sizing: border-box;
@@ -23,7 +27,7 @@ opacity:0.7;
 }
 
 .xdsoft_range2dslider_box{
-	border:1px solid #ccc;
+	border:1px solid rgb(0, 255, 13);
 	height:100px;
 	width:auto;
 	position:relative;
