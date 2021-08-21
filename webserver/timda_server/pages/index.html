@@ -47,7 +47,7 @@
         <input type="radio" name="radio" value="Virtual Joystick">
         <span class="checkmark"></span>
         </label>
-        <br>
+        
         <label class="radio-container">Real Joystick
         <input type="radio" name="radio" value="Real Joystick">
         <span class="checkmark"></span>
@@ -65,7 +65,7 @@
     <div id="joystick" style="border: 2px rgb(3, 167, 158) dashed">
         
         <div id="leftside" style=" width: 200px; float:left">
-            strategy_web
+            <b>rqt control</b>
             <form name='form' id='form'>
             game_start:
             <input id='game_start' type="checkbox" onclick=gameStart()><br />
@@ -95,20 +95,16 @@
             </select><br />   
             nav_start:    
             <input id='nav_start' type="checkbox"onclick=navStart() ><br /> 
+            speed:
         <div class="slidecontainer inline">
             <input type="range" min="0.1" max="2.0" step="0.01" value="0.1" class="slider" id="powerRange" />
         </div>
         <div class="inline"><input style="width: 30px;" id="powerShow" type="text" value="0.1" disabled />m/s</div>
         </div>
-        <div id="leftside" style=" width:140px; float:left">
-            <input type='button' id='get_loc' value='left trun' onmousedown=LeftTrunPub() onmouseup=TrunOffPub() ontouchstart="LeftTrunPub();"  ontouchend="TrunOffPub();"  /><br />
-        </div>
-        <div id="right" style=" width:auto;  margin-left:200px;">
-            <input type='button' id='get_loc' value='right trun' onmousedown=RightTrunPub() onmouseup=TrunOffPub() ontouchstart="RightTrunPub();"  ontouchend="TrunOffPub();" /><br /> 
-        </div>
+
                            
                           
-        <div id="rightside" style="width:auto;  margin-left:200px;margin-right:200px;">
+        <div id="rightside" style="width:auto;  margin-left:30%;">
             <input id="slider">
             <script type="text/javascript">
         
@@ -131,7 +127,13 @@
             $('#slider')
                 .range2DSlider();
             </script>
-            
+            <div id="leftside" style=" width:140px; float:left">
+                <input type='button' id='get_loc' value='left trun' onmousedown=LeftTrunPub() onmouseup=TrunOffPub() ontouchstart="LeftTrunPub();"  ontouchend="TrunOffPub();"  /><br />
+            </div>
+            <div id="right" style=" width:auto;  margin-left:100px;">
+                <input type='button' id='get_loc' value='right trun' onmousedown=RightTrunPub() onmouseup=TrunOffPub() ontouchstart="RightTrunPub();"  ontouchend="TrunOffPub();" /><br /> 
+            </div>
+            _ _
         </div>
     </div>
     
