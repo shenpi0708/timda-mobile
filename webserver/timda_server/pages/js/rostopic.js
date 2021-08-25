@@ -7,6 +7,7 @@ $("#powerRange").on("input change", function () {
 // -----------------
 $(function () {
   var socket = io();
+  socket.connect('http://localhost:8081/index.html');
   socket.on("connect", function () {
     console.log("IO STATUS: ", socket.connected);
     $("#io-status").text(socket.connected);
