@@ -29,17 +29,40 @@ document.oncontextmenu = function () {
   return false;
 }; // 防右鍵選單
 
-var goods = new ROSLIB.Topic({
-	ros: ros,
-	name: "/goods",
-	messageType: "std_msgs/String",
-  });
+// var goods = new ROSLIB.Topic({
+// 	ros: ros,
+// 	name: "/goods",
+// 	messageType: "std_msgs/String",
+//   });
+  
+var addTwoIntsClient = new ROSLIB.Service({
+  ros : ros,
+  name : '/goods',
+  serviceType : 'std_srvs/Empty'
+});
+
+
+
+
+
 
 function pub_goods(id){
   // str=document.getElementById("Item").value;
-  var pub = new ROSLIB.Message({data : id});
-  console.log(pub)
-  goods.publish(pub);
+  // var pub = new ROSLIB.Message({data : id});
+  // console.log(pub)
+  // goods.publish(pub);
+
+  var request = new ROSLIB.ServiceRequest({
+    str : id
+  });
+  
+  addTwoIntsClient.callService(request, function(result) {
+    console.log('Result for service call on '
+      + addTwoIntsClient.name
+      + ': '
+      + result.is_listen);
+  });
+  
 }
 
 
