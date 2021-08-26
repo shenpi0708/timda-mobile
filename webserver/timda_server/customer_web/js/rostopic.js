@@ -39,9 +39,8 @@ document.oncontextmenu = function () {
 var addTwoIntsClient = new ROSLIB.Service({
   ros : ros,
   name : '/goods',
-  serviceType : 'std_srvs/Empty'
+  serviceType : 'diagnostic_msgs/AddDiagnostics'
 });
-
 
 
 
@@ -54,14 +53,14 @@ function pub_goods(id){
   // goods.publish(pub);
 
   var request = new ROSLIB.ServiceRequest({
-    str : id
+    load_namespace:id
   });
   
   addTwoIntsClient.callService(request, function(result) {
     console.log('Result for service call on '
       + addTwoIntsClient.name
       + ': '
-      + result.is_listen);
+      + result.success);
   });
 
 }
