@@ -13,12 +13,12 @@ ros.on("connection", function () {
 
 ros.on("error", function (error) {
   console.log("Error connecting to websocket server: ", error);
-  alert("Error connecting to websocket server: ", error);
+  // alert("Error connecting to websocket server: ", error);
 });
 
 ros.on("close", function () {
   console.log("Connection to websocket server closed.");
-
+  alert("Connection to websocket server closed.");
 
 });
 
@@ -28,6 +28,7 @@ ros.on("close", function () {
 document.oncontextmenu = function () {
   return false;
 }; // 防右鍵選單
+
 
 // var goods = new ROSLIB.Topic({
 // 	ros: ros,
@@ -62,7 +63,7 @@ function pub_goods(id){
       + ': '
       + result.is_listen);
   });
-  
+
 }
 
 
