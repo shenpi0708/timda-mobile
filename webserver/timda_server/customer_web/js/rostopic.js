@@ -29,16 +29,9 @@ document.oncontextmenu = function () {
   return false;
 }; // 防右鍵選單
 
-
-// var goods = new ROSLIB.Topic({
-// 	ros: ros,
-// 	name: "/goods",
-// 	messageType: "std_msgs/String",
-//   });
-  
 var addTwoIntsClient = new ROSLIB.Service({
   ros : ros,
-  name : '/goods',
+  name : '/customer_order',
   serviceType : 'diagnostic_msgs/AddDiagnostics'
 });
 
@@ -47,28 +40,24 @@ var addTwoIntsClient = new ROSLIB.Service({
 
 
 function pub_goods(id){
-  // str=document.getElementById("Item").value;
-  // var pub = new ROSLIB.Message({data : id});
-  // console.log(pub)
-  // goods.publish(pub);
+
   table_name=document.getElementById("tables").value
   var request = new ROSLIB.ServiceRequest({
-    load_namespace:table_name+'-'+id
+    load_namespace:id+'+'+table_name
   });
-  console.log(table_name)
+
   addTwoIntsClient.callService(request, function(result) {
     document.getElementById(id+'_print').style="visibility: visible;"
-    document.getElementById(id+'_print').innerHTML=request.message;
+    document.getElementById(id+'_print').innerHTML=result.message;
     setTimeout(function myFunction(){
       document.getElementById(id+'_print').style="visibility: hidden;"
-    }, 3000);
-
+    }, 1000);
 
     console.log('Result for service call on '
       + addTwoIntsClient.name
       + ': '
       + result.success
-      +request.message);
+      + result.message);
   });
 
 }
