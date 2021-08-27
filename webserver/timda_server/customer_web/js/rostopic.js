@@ -51,21 +51,26 @@ function pub_goods(id){
   // var pub = new ROSLIB.Message({data : id});
   // console.log(pub)
   // goods.publish(pub);
-
+  table_name=document.getElementById("tables").value
   var request = new ROSLIB.ServiceRequest({
-    load_namespace:id
+    load_namespace:id+table_name
   });
-  
+  console.log(table_name)
   addTwoIntsClient.callService(request, function(result) {
+    document.getElementById(id+'_print').style="visibility: visible;"
+    document.getElementById(id+'_print').innerHTML=request.message;
+    setTimeout(function myFunction(){
+      document.getElementById(id+'_print').style="visibility: hidden;"
+    }, 3000);
+
+
     console.log('Result for service call on '
       + addTwoIntsClient.name
       + ': '
-      + result.success);
+      + result.success
+      +request.message);
   });
 
 }
-
-
-
 
 
