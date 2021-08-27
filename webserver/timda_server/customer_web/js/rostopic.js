@@ -53,7 +53,7 @@ function pub_goods(id){
   // goods.publish(pub);
   table_name=document.getElementById("tables").value
   var request = new ROSLIB.ServiceRequest({
-    load_namespace:id+table_name
+    load_namespace:table_name+'-'+id
   });
   console.log(table_name)
   addTwoIntsClient.callService(request, function(result) {
