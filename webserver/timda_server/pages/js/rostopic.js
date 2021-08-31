@@ -1,4 +1,3 @@
-
 $("#powerRange").on("input change", function () {
   $("#powerShow").val($("#powerRange").val());
 });
@@ -7,7 +6,7 @@ $("#powerRange").on("input change", function () {
 // -----------------
 $(function () {
   var socket = io();
-  socket.connect('http://localhost:8081/index.html');
+  socket.connect("http://localhost:8081/index.html");
   socket.on("connect", function () {
     console.log("IO STATUS: ", socket.connected);
     $("#io-status").text(socket.connected);
@@ -32,7 +31,6 @@ $(function () {
 document.oncontextmenu = function () {
   return false;
 }; // 防右鍵選單
-
 
 // Publishing cmd_vel of Joystick
 // ------------------
@@ -114,14 +112,13 @@ window.addEventListener(
 var countJoy = 0;
 const countNum = 10;
 
-
 var joyInterval;
 var gamepadInterval;
 $("input[type=radio][name=radio]").change(function () {
   if ($("input[name=radio]:checked", "#controlForm").val() == "No Manual") {
     // console.log("123")
     KeyboardState(false);
-    VirtualState(false)
+    VirtualState(false);
     clearInterval(joyInterval);
     clearInterval(gamepadInterval);
     for (i = 0; i < countNum; i++) {
@@ -135,13 +132,13 @@ $("input[type=radio][name=radio]").change(function () {
     $("input[name=radio]:checked", "#controlForm").val() == "Virtual Joystick"
   ) {
     KeyboardState(false);
-    VirtualState(this.checked)
+    VirtualState(this.checked);
     clearInterval(gamepadInterval);
   } else if (
     $("input[name=radio]:checked", "#controlForm").val() == "Real Joystick"
   ) {
     KeyboardState(false);
-    VirtualState(false)
+    VirtualState(false);
     Joy3.SetReturnToCenter(false);
     $("#joystick").css("background-color", "rgba(0, 0, 0, .1)");
     // Use real joystick
@@ -160,35 +157,46 @@ $("input[type=radio][name=radio]").change(function () {
     $("input[name=radio]:checked", "#controlForm").val() == "KeyboardControl"
   ) {
     KeyboardState(this.checked);
-    VirtualState(false)
+    VirtualState(false);
   }
 });
 
-
 function LeftTrunPub() {
-  if (Virtualstart==true){
+  if (Virtualstart == true) {
     var speed = document.getElementById("powerRange").value;
     twist.linear.x = 0.0;
     twist.linear.y = 0.0;
-    twist.angular.z = 1.0*speed;
+    twist.angular.z = 1.0 * speed;
     cmdVel.publish(twist);
   }
 }
 
 function RightTrunPub() {
-  if (Virtualstart==true){
+  if (Virtualstart == true) {
     var speed = document.getElementById("powerRange").value;
     twist.linear.x = 0.0;
     twist.linear.y = 0.0;
-    twist.angular.z = -1.0*speed;
+    twist.angular.z = -1.0 * speed;
     cmdVel.publish(twist);
   }
 }
 function TrunOffPub() {
-  if (Virtualstart==true){
+  if (Virtualstart == true) {
     twist.linear.x = 0.0;
     twist.linear.y = 0.0;
     twist.angular.z = 0.0;
     cmdVel.publish(twist);
   }
+}
+var ilove = new ROSLIB.Topic({
+  ros: ros,
+  name: "/iloverobot",
+  messageType: "std_msgs/Bool",
+});
+a = 1;
+var Bool = new ROSLIB.Message({
+  data: true,
+});
+function ILoveRobot() {
+  ilove.publish(Bool);
 }
