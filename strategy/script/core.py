@@ -201,16 +201,21 @@ class Strategy(object):
                     print(a)
                     while 1:
                         if self.robot.status[0].status == 3:
-                            print("Nav Stop")
-                            print(req.item_req + "Reached!")
+                            print("Nice!")
                             break
-                        elif self.robot.status[0].status == 5 or self.robot.status[0].status == 4 or self.robot.status[0].status == 6 or self.robot.status[0].status == 7 or self.robot.status[0].status == 2:
-                            print("Nav Cancel!")
+                        elif self.robot.nav_start == False:
+                            self.dclient.update_configuration({"Nav_start" : "True"})
+                            print("plz pay atention for our service!")
                             break
+#                        elif self.robot.status[0].status == 5 or self.robot.status[0].status == 4 or self.robot.status[0].status == 6 or self.robot.status[0].status == 7 or self.robot.status[0].status == 2:
+#                            print("Great!")
+#                            break
 
                     while self.robot.nav_mode == "directory":
                         if self.robot.nav_start == False:
                             break
+                    print("Nav Stop")
+                    print(req.item_req + "Reached!")
                     self.dclient.update_configuration(
                         {"Nav_start": "False"})
                 res.nav_res = 'finish'

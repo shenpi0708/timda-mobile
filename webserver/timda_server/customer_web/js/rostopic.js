@@ -13,12 +13,12 @@ ros.on("connection", function () {
 
 ros.on("error", function (error) {
   console.log("Error connecting to websocket server: ", error);
-  // alert("Error connecting to websocket server: ", error);
+  alert("Error connecting to websocket server: ", error);
 });
 
 ros.on("close", function () {
   console.log("Connection to websocket server closed.");
-  alert("Connection to websocket server closed.");
+
 
 });
 
@@ -29,100 +29,20 @@ document.oncontextmenu = function () {
   return false;
 }; // 防右鍵選單
 
-var addTwoIntsClient = new ROSLIB.Service({
-<<<<<<< HEAD
-  ros : ros,
-  name : '/customer_order',
-  serviceType : 'diagnostic_msgs/AddDiagnostics'
-});
-
-
-
-
+var goods = new ROSLIB.Topic({
+	ros: ros,
+	name: "/goods",
+	messageType: "std_msgs/String",
+  });
 
 function pub_goods(id){
-
-  table_name=document.getElementById("tables").value
-  var request = new ROSLIB.ServiceRequest({
-    load_namespace:id+'+'+table_name
-  });
-
-  addTwoIntsClient.callService(request, function(result) {
-    document.getElementById(id+'_print').style="visibility: visible;"
-    document.getElementById(id+'_print').innerHTML=result.message;
-    setTimeout(function myFunction(){
-      document.getElementById(id+'_print').style="visibility: hidden;"
-    }, 1000);
-
-    console.log('Result for service call on '
-      + addTwoIntsClient.name
-      + ': '
-      + result.success
-      + result.message);
-  });
-
-=======
-  ros: ros,
-  name: '/customer_order',
-  serviceType: 'diagnostic_msgs/AddDiagnostics'
-});
-function radio(name) {
-  table_name = document.getElementsByName(name)
-  for (var i = 0; i < table_name.length; i++) {
-    if (table_name[i].checked) {
-      return table_name[i].value;
-
-    }
-  }
-
+  // str=document.getElementById("Item").value;
+  var pub = new ROSLIB.Message({data : id});
+  console.log(pub)
+  goods.publish(pub);
 }
 
-table_name = document.getElementById("tables").value
-var request = new ROSLIB.ServiceRequest({
-  load_namespace: id + '+' + table_name
-});
 
-addTwoIntsClient.callService(request, function (result) {
-  document.getElementById(id + '_print').style = "visibility: visible;"
-  document.getElementById(id + '_print').innerHTML = result.message;
-  setTimeout(function myFunction() {
-    document.getElementById(id + '_print').style = "visibility: hidden;"
-  }, 1000);
 
-  console.log('Result for service call on '
-    + addTwoIntsClient.name
-    + ': '
-    + result.success
-    + result.message);
-});
-
-function pub_goods(id) {
-
-  table_name = radio("group1")
-  // console.log(table_name
-  if (table_name == undefined) {
-    alert("Please choose table");
-    return;
-  }
-  var request = new ROSLIB.ServiceRequest({
-    load_namespace: id + '+' + table_name
-  });
-
-  addTwoIntsClient.callService(request, function (result) {
-    document.getElementById(id + '_print').style = "visibility: visible;"
-    document.getElementById(id + '_print').innerHTML = result.message;
-    setTimeout(function myFunction() {
-      document.getElementById(id + '_print').style = "visibility: hidden;"
-    }, 1000);
-
-    console.log('Result for service call on '
-      + addTwoIntsClient.name
-      + ': '
-      + result.success
-      + result.message);
-  });
-
->>>>>>> 25209b56f29a9af12ee30bf0e7b367a38e7c3001
-}
 
 
